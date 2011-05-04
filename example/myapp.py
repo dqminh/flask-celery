@@ -6,7 +6,8 @@ def create_app():
     return Flask("myapp")
 
 app = create_app()
-celery = Celery(app)
+celery = Celery()
+celery.init_app(app)
 
 
 @celery.task(name="myapp.add")

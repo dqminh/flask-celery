@@ -37,9 +37,15 @@ class Celery(App):
     flask_app = None
     loader_cls = get_full_cls_name(FlaskLoader)
 
-    def __init__(self, flask_app, **kwargs):
-        self.flask_app = flask_app
+    def __init__(self, flask_app=None, **kwargs):
+        if flask_app is not None:
+            self.flask_app = flask_app
+            self.init_app(flask_app)
         super(Celery, self).__init__(**kwargs)
+
+    def init_app(self, flask_app):
+        """Initialize the celery using factory pattern"""
+        self.flask_app = flask_app
 
 
 def to_Option(option, typemap={"int": int, "float": float, "string": str}):
